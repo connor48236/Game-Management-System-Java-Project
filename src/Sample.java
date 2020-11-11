@@ -9,7 +9,8 @@ public class Sample extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        BorderPane root = new BorderPane(); Scene scene = new Scene(root, 400, 400);
+        BorderPane root = new BorderPane();
+        Scene scene = new Scene(root, 400, 400);
         stage.setScene(scene);
         stage.show();
     }
