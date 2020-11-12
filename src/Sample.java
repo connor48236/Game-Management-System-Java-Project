@@ -1,3 +1,4 @@
+import database.Database;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,5 +14,7 @@ public class Sample extends Application {
         Scene scene = new Scene(root, 400, 400);
         stage.setScene(scene);
         stage.show();
+
+        Database.getInstance();
     }
 }
