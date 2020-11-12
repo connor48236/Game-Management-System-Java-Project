@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class Database {
+    // Instance variable for singleton
     private static Database instance = null;
     private Connection connection = null;
 
+    // Private constructor
     private Database() {
         if (connection == null) {
             try {
@@ -19,6 +21,7 @@ public class Database {
         }
     }
 
+    // getInstance method
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
