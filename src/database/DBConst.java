@@ -37,8 +37,6 @@ public class DBConst {
     public static final String GAME_CATEGORY_COLUMN_GAME = "game_id";
     public static final String GAME_CATEGORY_COLUMN_CATEGORY = "category_id";
 
-    // CRUD
-
     // CREATE STATEMENTS
     // Create DevInfo Table
     public static final String CREATE_TABLE_DEV_INFO = "CREATE TABLE " + TABLE_DEV_INFO + " (" +
