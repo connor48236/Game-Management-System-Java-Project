@@ -50,7 +50,7 @@ public class DBConst {
     // Create Game Table
     public static final String CREATE_TABLE_GAME = "CREATE TABLE " + TABLE_GAME + " (" +
             GAME_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
-            GAME_COLUMN_NAME + " VARCHAR(255), " +
+            GAME_COLUMN_NAME + " VARCHAR(256), " +
             GAME_COLUMN_RELEASE_DATE + " DATE, " +
             GAME_COLUMN_DEV_INFO + " INT NOT NULL, " +
             "FOREIGN KEY(" + GAME_COLUMN_DEV_INFO + ") REFERENCES " + TABLE_DEV_INFO + "(" + DEV_INFO_COLUMN_ID + ")," +
