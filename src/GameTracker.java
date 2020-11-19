@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Side;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -8,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import tabs.AddGameTab;
 import tabs.GameLibraryTab;
+import tabs.RemoveGameTab;
 
 public class GameTracker extends Application {
 
@@ -17,6 +19,7 @@ public class GameTracker extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         // Create menu bar
         MenuBar menuBar = new MenuBar();
 
@@ -42,8 +45,10 @@ public class GameTracker extends Application {
         // Add tabs to tab pane
         GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
         AddGameTab addGameTab = AddGameTab.getInstance();
+        RemoveGameTab removeGameTab = RemoveGameTab.getInstance();
 
-        tabPane.getTabs().addAll(gameLibraryTab, addGameTab);
+        tabPane.getTabs().addAll(gameLibraryTab, addGameTab, removeGameTab);
+        tabPane.setSide(Side.LEFT);
 
         // Create border pane
         BorderPane root = new BorderPane();
@@ -53,6 +58,7 @@ public class GameTracker extends Application {
 
         // Add the tab pane
         root.setCenter(tabPane);
+
 
         // Scene and stage setup
         Scene scene = new Scene(root, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT);
