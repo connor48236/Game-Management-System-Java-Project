@@ -11,9 +11,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CategoryTable implements CategoryDao {
+    //Connects to the data base
     Database database = Database.getInstance();
+    //Creates a arrayList of categories
     ArrayList<Category> categories;
 
+    /**
+     *This function will grab all Categories form the database
+     * @return And return Them
+     */
     @Override
     public ArrayList<Category> getAllCategory() {
         String sql = "SELECT * FROM " + DBConst.TABLE_CATEGORY;
@@ -32,6 +38,11 @@ public class CategoryTable implements CategoryDao {
         return categories;
     }
 
+    /**
+     *
+     * @param id Using id users can search for a category by entering in a id and the function will compare the id's
+     * @return returns a category or a null if there is not category
+     */
     @Override
     public Category getCategory(int id) {
         String sql = "SELECT * FROM " + DBConst.TABLE_CATEGORY + " WHERE " + DBConst.CATEGORY_COLUMN_ID + " = " + id;

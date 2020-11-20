@@ -12,10 +12,15 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DevInfoTable implements DevInfoDao {
+    //Connects to the data base
     Database database = Database.getInstance();
+    //Creates a arrayList of devInfo
     ArrayList<DevInfo> devInfos;
 
-
+    /**
+     *This function will grab all DevInfo form the database
+     * @return And return Them
+     */
     @Override
     public ArrayList<DevInfo> getAllDevInfo() {
         String sql = "SELECT * FROM " + DBConst.TABLE_DEV_INFO;
@@ -35,6 +40,11 @@ public class DevInfoTable implements DevInfoDao {
         return devInfos;
     }
 
+    /**
+     *
+     * @param id Using id users can search for a DevInfo by entering in a id and the function will compare the id's
+     * @return returns a DevInfo or a null if there is not DevInfo
+     */
     @Override
     public DevInfo getDevInfo(int id) {
         String sql = "SELECT * FROM " + DBConst.TABLE_DEV_INFO + " WHERE " + DBConst.DEV_INFO_COLUMN_ID + " = " + id;

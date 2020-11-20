@@ -12,10 +12,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class platformTable implements PlatformDao {
+    //Connects to the database
     Database database = Database.getInstance();
+    //Creates a arrayList of platforms
     ArrayList<Platform> platforms;
 
 
+    /**
+     *
+     * @return This will return all platforms in the database
+     */
     @Override
     public ArrayList<Platform> getAllPlatforms() {
         String sql = "SELECT * FROM " + DBConst.TABLE_PLATFORM;
@@ -33,6 +39,12 @@ public class platformTable implements PlatformDao {
         }
         return platforms;
     }
+
+    /**
+     *
+     * @param id This will let the user enter a id and the function will compare the id with other id's
+     * @return This will return a platform based on the id and a null if there is no match
+     */
 
     @Override
     public Platform getPlatform(int id) {

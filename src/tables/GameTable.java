@@ -13,10 +13,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class GameTable  implements GameDao {
+    //Connects to the dataBase
     Database database = Database.getInstance();
+    //Creates a arrayList of Games
     ArrayList<Game> games;
 
 
+    /**
+     *
+     * @return This will find all games in the database and return them
+     */
     @Override
     public ArrayList<Game> getAllGames() {
         String sql = "SELECT * FROM " + DBConst.TABLE_GAME;
@@ -35,6 +41,12 @@ public class GameTable  implements GameDao {
         }
         return games;
     }
+
+    /**
+     *
+     * @param id The id lets you enter a id and the function will compare it with game id's looking for a match
+     * @return Will return a game based on the id given
+     */
 
     @Override
     public Game getGame(int id) {
@@ -57,6 +69,11 @@ public class GameTable  implements GameDao {
         return game;
     }
 
+    /**
+     *
+     * @param id Will allow the user to delete a game based on the id
+     */
+
     @Override
     public void deleteGame(int id) {
         String sql = "DELETE FROM " + DBConst.TABLE_GAME + " WHERE " + DBConst.GAME_COLUMN_ID + " = " + id;
@@ -68,6 +85,11 @@ public class GameTable  implements GameDao {
         }
 
     }
+
+    /**
+     *
+     * @param game This will allow the user to insert a new game into the dataBase
+     */
 
     @Override
     public void createGame(Game game) {
