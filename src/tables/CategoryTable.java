@@ -23,7 +23,7 @@ public class CategoryTable implements CategoryDao {
             ResultSet data = getCategory.executeQuery(sql);
 
             while (data.next()){
-                categories.add(new Category(data.getInt(DBConst.CATEGORY_COLUMN_ID), (DBConst.CATEGORY_COLUMN_NAME)));
+                categories.add(new Category(data.getInt(DBConst.CATEGORY_COLUMN_ID), data.getString(DBConst.CATEGORY_COLUMN_NAME)));
             }
 
         } catch (SQLException e){
@@ -34,6 +34,22 @@ public class CategoryTable implements CategoryDao {
 
     @Override
     public Category getCategory(int id) {
-        return null;
+        String sql = "SELECT * FROM " + DBConst.TABLE_CATEGORY + " WHERE " + DBConst.CATEGORY_COLUMN_ID + " = " + id;
+        Category category = null;
+
+        try {
+            Statement getCategory = database.getConnection().createStatement();
+            ResultSet data = getCategory.executeQuery(sql);
+
+            while (data.next()){
+                category = new Category(data.getInt(DBConst.CATEGORY_COLUMN_ID), data.getString(DBConst.CATEGORY_COLUMN_NAME));
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+
+        return category;
     }
 }
