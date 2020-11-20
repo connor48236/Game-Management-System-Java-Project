@@ -10,6 +10,9 @@ public class AddGameTab extends Tab {
     // Private constructor so AddGameTab is a singleton.
     private AddGameTab() {
         this.setText("Add Game");
+
+
+
     }
 
     // Get instance method.
