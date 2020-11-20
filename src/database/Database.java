@@ -55,4 +55,8 @@ public class Database {
             System.out.println(tableName + " Table has been created successfully!");
         }
     }
+
+    public Connection getConnection(){
+        return connection;
+    }
 }
