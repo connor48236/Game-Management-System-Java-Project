@@ -27,8 +27,8 @@ public class GameTable  implements GameDao {
             while (data.next()){
                 games.add(new Game(data.getInt(DBConst.GAME_COLUMN_ID),
                         data.getString(DBConst.GAME_COLUMN_NAME),
-                        data.getString(DBConst.GAME_CATEGORY_COLUMN_CATEGORY),
-                        data.getInt(DBConst.GAME_COLUMN_DEV_INFO)));
+                        data.getString(DBConst.GAME_COLUMN_DEV_INFO),
+                        data.getInt(DBConst.GAME_COLUMN_RELEASE_DATE)));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -48,22 +48,40 @@ public class GameTable  implements GameDao {
             while (data.next()) {
                 games.add(new Game(data.getInt(DBConst.GAME_COLUMN_ID),
                         data.getString(DBConst.GAME_COLUMN_NAME),
-                        data.getString(DBConst.GAME_CATEGORY_COLUMN_CATEGORY),
-                        data.getInt(DBConst.GAME_COLUMN_DEV_INFO)));
+                        data.getString(DBConst.GAME_COLUMN_DEV_INFO),
+                        data.getInt(DBConst.GAME_COLUMN_RELEASE_DATE)));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return game;
     }
 
     @Override
-    public void deleteGame(Game game) {
+    public void deleteGame(int id) {
+        String sql = "DELETE FROM " + DBConst.TABLE_GAME + " WHERE " + DBConst.GAME_COLUMN_ID + " = " + id;
+        try{
+            database.getConnection().createStatement().execute(sql);
+            System.out.println("Deleted Game");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
     @Override
     public void createGame(Game game) {
-
+        String sql = "INSERT INTO " + DBConst.TABLE_GAME +
+                "(" + DBConst.GAME_COLUMN_NAME + "," +
+                DBConst.GAME_CATEGORY_COLUMN_CATEGORY + "," +
+                DBConst.GAME_COLUMN_DEV_INFO + ") VALUES ('" +
+                game.getName() + "','" + game.getReleaseDate() + "','" + game.getDevInfo() + "')";
+        try {
+            database.getConnection().createStatement().execute(sql);
+            System.out.println("Inserted Record");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 
 
