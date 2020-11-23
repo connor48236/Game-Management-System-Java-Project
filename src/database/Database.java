@@ -46,7 +46,7 @@ public class Database {
     public void createTable(String tableName, String tableQuery, Connection connection) throws SQLException {
         Statement createTables;
         DatabaseMetaData metaData = connection.getMetaData();
-        ResultSet resultSet = metaData.getTables(null, null, tableName, null);
+        ResultSet resultSet = metaData.getTables(Login.DB_NAME, null, tableName, null);
         if (resultSet.next()) {
             System.out.println(tableName + " Table already exists!");
         } else {
