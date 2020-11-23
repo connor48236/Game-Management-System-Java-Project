@@ -1,3 +1,4 @@
+import database.Database;
 import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
@@ -66,5 +67,6 @@ public class GameTracker extends Application {
         stage.setTitle("Game Management System");
         stage.show();
 
+        Database database = Database.getInstance();
     }
 }
