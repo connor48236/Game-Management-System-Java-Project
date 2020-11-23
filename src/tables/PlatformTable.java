@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class platformTable implements PlatformDao {
+public class PlatformTable implements PlatformDao {
     //Connects to the database
     Database database = Database.getInstance();
     //Creates a arrayList of platforms
@@ -45,7 +45,6 @@ public class platformTable implements PlatformDao {
      * @param id This will let the user enter a id and the function will compare the id with other id's
      * @return This will return a platform based on the id and a null if there is no match
      */
-
     @Override
     public Platform getPlatform(int id) {
         String sql = "SELECT * FROM " + DBConst.TABLE_PLATFORM + " WHERE " + DBConst.PLATFORM_COLUMN_ID + " = " + id;
