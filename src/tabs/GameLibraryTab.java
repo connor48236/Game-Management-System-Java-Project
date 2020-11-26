@@ -10,7 +10,12 @@ public class GameLibraryTab extends Tab {
     // Private constructor so GameLibraryTab is a singleton.
     private GameLibraryTab() {
         this.setText("Game Library");
+
+
+
     }
+
+
 
     // Get instance method.
     public static GameLibraryTab getInstance() {

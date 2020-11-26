@@ -65,9 +65,9 @@ public class AddGameTab extends Tab {
         //Text and ComboBox for platform
         Text platform = new Text("Platform");
         root.add(platform, 6, 0);
-        TextField userPlatform = new TextField();
-        userPlatform.setPromptText("Enter the platforms this game is available on here");
-        root.add(userPlatform, 7, 0);
+        ComboBox<Platform> comboPlatform = new ComboBox<>();
+        comboPlatform.setItems(FXCollections.observableList(platformTable.getAllPlatforms()));
+        root.add(comboPlatform, 7, 0);
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
