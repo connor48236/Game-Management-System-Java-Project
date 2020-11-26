@@ -25,7 +25,7 @@ public class PlatformTable implements PlatformDao {
     @Override
     public ArrayList<Platform> getAllPlatforms() {
         String sql = "SELECT * FROM " + DBConst.TABLE_PLATFORM;
-        platforms = new ArrayList<Platform>();
+        platforms = new ArrayList<>();
         try{
             Statement getPlatform = database.getConnection().createStatement();
             ResultSet data = getPlatform.executeQuery(sql);
@@ -62,8 +62,20 @@ public class PlatformTable implements PlatformDao {
             e.printStackTrace();
         }
 
-
         return platform;
+    }
+
+    @Override
+    public void createPlatform(Platform platform) {
+        String sql = "INSERT INTO " + DBConst.TABLE_PLATFORM +
+                "(" + DBConst.PLATFORM_COLUMN_NAME + ") VALUES ('" +
+                platform.getName() + "')";
+        try {
+            database.getConnection().createStatement().execute(sql);
+            System.out.println("Inserted Record");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
 

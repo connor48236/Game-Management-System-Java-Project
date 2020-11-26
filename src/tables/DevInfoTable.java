@@ -63,7 +63,20 @@ public class DevInfoTable implements DevInfoDao {
             e.printStackTrace();
         }
 
-
         return devInfo;
+    }
+
+    @Override
+    public void createDevInfo(DevInfo devInfo) {
+        String sql = "INSERT INTO " + DBConst.TABLE_DEV_INFO +
+                "(" + DBConst.DEV_INFO_COLUMN_DEVELOPER_NAME + "," +
+                DBConst.DEV_INFO_COLUMN_PUBLISHER_NAME + ") VALUES ('" +
+                devInfo.getDeveloperName() + "','" + devInfo.getPublisherName() + "')";
+        try {
+            database.getConnection().createStatement().execute(sql);
+            System.out.println("Inserted Record");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
