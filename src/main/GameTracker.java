@@ -1,3 +1,5 @@
+package main;
+
 import database.Database;
 import javafx.application.Application;
 import javafx.geometry.Side;
@@ -17,6 +19,8 @@ public class GameTracker extends Application {
     public static void main(String[] args) {
         Application.launch(args);
     }
+
+    private static Stage stage;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -67,6 +71,12 @@ public class GameTracker extends Application {
         stage.setTitle("Game Management System");
         stage.show();
 
+        this.stage = stage;
+
         Database database = Database.getInstance();
+    }
+
+    public static Stage getStage() {
+        return stage;
     }
 }

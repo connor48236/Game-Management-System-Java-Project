@@ -21,7 +21,7 @@ public class CategoryTable implements CategoryDao {
      * @return And return Them
      */
     @Override
-    public ArrayList<Category> getAllCategory() {
+    public ArrayList<Category> getAllCategories() {
         String sql = "SELECT * FROM " + DBConst.TABLE_CATEGORY;
         categories = new ArrayList<Category>();
         try{

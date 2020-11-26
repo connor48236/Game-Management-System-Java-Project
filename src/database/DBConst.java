@@ -6,6 +6,7 @@ public class DBConst {
     public static final String TABLE_GAME = "game";
     public static final String GAME_COLUMN_ID = "id";
     public static final String GAME_COLUMN_NAME = "name";
+    public static final String GAME_COLUMN_IMAGE = "image";
     public static final String GAME_COLUMN_RELEASE_DATE = "release_date";
     public static final String GAME_COLUMN_DEV_INFO = "dev_info";
 
@@ -49,6 +50,7 @@ public class DBConst {
     public static final String CREATE_TABLE_GAME = "CREATE TABLE " + TABLE_GAME + " (" +
             GAME_COLUMN_ID + " INT NOT NULL AUTO_INCREMENT, " +
             GAME_COLUMN_NAME + " VARCHAR(256), " +
+            GAME_COLUMN_IMAGE + " VARCHAR(256), " +
             GAME_COLUMN_RELEASE_DATE + " DATE, " +
             GAME_COLUMN_DEV_INFO + " INT NOT NULL, " +
             "FOREIGN KEY(" + GAME_COLUMN_DEV_INFO + ") REFERENCES " + TABLE_DEV_INFO + "(" + DEV_INFO_COLUMN_ID + ")," +
