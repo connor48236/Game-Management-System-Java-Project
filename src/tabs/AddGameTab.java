@@ -5,6 +5,11 @@ import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import main.GameTracker;
+import pojo.Platform;
+import tables.CategoryTable;
+import tables.DevInfoTable;
+import tables.GameTable;
+import tables.PlatformTable;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +27,17 @@ public class AddGameTab extends Tab {
     private AddGameTab() {
         this.setText("Add Game");
 
+        //Adding the tables to the class to use them
+        CategoryTable categoryTable = new CategoryTable();
+        DevInfoTable devInfoTable = new DevInfoTable();
+        GameTable gameTable = new GameTable();
+        PlatformTable platformTable = new PlatformTable();
+
         GridPane root = new GridPane();
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
+
 
 
         Button imageButton = new Button("Select Image");
