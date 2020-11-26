@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import main.GameTracker;
 import pojo.Category;
-import pojo.Game;
 import pojo.Platform;
 import tables.CategoryTable;
 import tables.DevInfoTable;
