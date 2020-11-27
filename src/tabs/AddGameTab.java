@@ -186,6 +186,7 @@ public class AddGameTab extends Tab {
                     gameReleaseYear.toString(),
                     new DevInfo(gameDeveloper.getText(), gamePublisher.getText()).getId()
             );
+            System.out.println(gamePlatform.getSelectionModel().getSelectedItem().getId());
             gameTable.createGame(game);
         });
         root.add(addGameButton, 0, 7);
