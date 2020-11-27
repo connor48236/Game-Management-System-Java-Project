@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 public class Game {
     private int id;
     private String name;
+    private String image;
+    private int platform;
+    private int category;
     private String releaseDate;
     private int devInfo;
 
@@ -12,15 +15,21 @@ public class Game {
     public Game() {
     }
 
-    public Game(String name, String releaseDate, int devInfo) {
+    public Game(String name, String image, int platform, int category, String releaseDate, int devInfo) {
         this.name = name;
+        this.image = image;
+        this.platform = platform;
+        this.category = category;
         this.releaseDate = releaseDate;
         this.devInfo = devInfo;
     }
 
-    public Game(int id, String name, String releaseDate, int devInfo) {
+    public Game(int id, String name, String image, int platform, int category, String releaseDate, int devInfo) {
         this.id = id;
         this.name = name;
+        this.image = image;
+        this.platform = platform;
+        this.category = category;
         this.releaseDate = releaseDate;
         this.devInfo = devInfo;
 
@@ -43,6 +52,30 @@ public class Game {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(int platform) {
+        this.platform = platform;
+    }
+
+    public int getCategory() {
+        return category;
+    }
+
+    public void setCategory(int category) {
+        this.category = category;
+    }
+
     public String getReleaseDate() {
         return releaseDate;
     }
@@ -58,5 +91,4 @@ public class Game {
     public void setDevInfo(int devInfo) {
         this.devInfo = devInfo;
     }
-
 }
