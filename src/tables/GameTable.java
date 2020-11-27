@@ -35,8 +35,8 @@ public class GameTable  implements GameDao {
                         data.getString(DBConst.GAME_COLUMN_IMAGE),
                         data.getInt(DBConst.GAME_COLUMN_PLATFORM),
                         data.getInt(DBConst.GAME_COLUMN_CATEGORY),
-                        data.getString(DBConst.GAME_COLUMN_DEV_INFO),
-                        data.getInt(DBConst.GAME_COLUMN_RELEASE_DATE)));
+                        data.getString(DBConst.GAME_COLUMN_RELEASE_DATE),
+                        data.getInt(DBConst.GAME_COLUMN_DEV_INFO)));
             }
         }catch (SQLException e){
             e.printStackTrace();
