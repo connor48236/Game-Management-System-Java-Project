@@ -60,7 +60,19 @@ public class CategoryTable implements CategoryDao {
             e.printStackTrace();
         }
 
-
         return category;
+    }
+
+    @Override
+    public void createCategory(Category category) {
+        String sql = "INSERT INTO " + DBConst.TABLE_CATEGORY +
+                "(" + DBConst.CATEGORY_COLUMN_NAME + ") VALUES ('" +
+                category.getName() + "')";
+        try {
+            database.getConnection().createStatement().execute(sql);
+            System.out.println("Inserted Record");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }
