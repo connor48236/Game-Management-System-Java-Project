@@ -6,6 +6,7 @@ import database.Database;
 import pojo.DevInfo;
 import pojo.Platform;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,9 @@ public class PlatformTable implements PlatformDao {
     Database database = Database.getInstance();
     //Creates a arrayList of platforms
     ArrayList<Platform> platforms;
+
+    public PlatformTable() throws IOException {
+    }
 
 
     /**

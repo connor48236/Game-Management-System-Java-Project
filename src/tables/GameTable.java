@@ -7,6 +7,7 @@ import pojo.DevInfo;
 import pojo.Game;
 
 import javax.xml.crypto.Data;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -17,6 +18,9 @@ public class GameTable  implements GameDao {
     Database database = Database.getInstance();
     //Creates a arrayList of Games
     ArrayList<Game> games;
+
+    public GameTable() throws IOException {
+    }
 
     /**
      *
