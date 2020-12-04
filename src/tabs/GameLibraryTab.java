@@ -9,6 +9,8 @@ import javafx.scene.text.TextAlignment;
 import pojo.Game;
 import tables.GameTable;
 
+import java.util.ArrayList;
+
 public class GameLibraryTab extends Tab {
 
     // Create private instance variable.
@@ -21,6 +23,8 @@ public class GameLibraryTab extends Tab {
         this.setText("Game Library");
         //Grabs and localizes the gameTable
         GameTable gameTable = new GameTable();
+
+
         //Sets gameInfo to a game based on ID
         Game gameInfo = gameTable.getGame(page);
         //Adds The borderPane

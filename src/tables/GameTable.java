@@ -51,7 +51,7 @@ public class GameTable  implements GameDao {
      */
     @Override
     public Game getGame(int id) {
-        String sql = "SELECT * FROM " + DBConst.GAME_COLUMN_ID + " WHERE " + DBConst.GAME_COLUMN_ID + " = " + id;
+        String sql = "SELECT * FROM " + DBConst.TABLE_GAME + " WHERE " + DBConst.GAME_COLUMN_ID + " = " + id;
         Game game = new Game();
 
         try {
