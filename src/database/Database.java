@@ -23,9 +23,8 @@ public class Database {
                 // Create tables for the user to use.
                 createTable(DBConst.TABLE_DEV_INFO, DBConst.CREATE_TABLE_DEV_INFO, connection);
                 createTable(DBConst.TABLE_PLATFORM, DBConst.CREATE_TABLE_PLATFORM, connection);
-                createTable(DBConst.TABLE_GAME, DBConst.CREATE_TABLE_GAME, connection);
                 createTable(DBConst.TABLE_CATEGORY, DBConst.CREATE_TABLE_CATEGORY, connection);
-                createTable(DBConst.TABLE_GAME_CATEGORY, DBConst.CREATE_TABLE_GAME_CATEGORY, connection);
+                createTable(DBConst.TABLE_GAME, DBConst.CREATE_TABLE_GAME, connection);
             } catch (Exception e) {
                 e.printStackTrace();
             }

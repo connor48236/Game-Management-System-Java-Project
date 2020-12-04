@@ -18,7 +18,6 @@ public class GameTable  implements GameDao {
     //Creates a arrayList of Games
     ArrayList<Game> games;
 
-
     /**
      *
      * @return This will find all games in the database and return them
@@ -35,8 +34,9 @@ public class GameTable  implements GameDao {
                         data.getString(DBConst.GAME_COLUMN_NAME),
                         data.getString(DBConst.GAME_COLUMN_IMAGE),
                         data.getInt(DBConst.GAME_COLUMN_PLATFORM),
-                        data.getString(DBConst.GAME_COLUMN_DEV_INFO),
-                        data.getInt(DBConst.GAME_COLUMN_RELEASE_DATE)));
+                        data.getInt(DBConst.GAME_COLUMN_CATEGORY),
+                        data.getString(DBConst.GAME_COLUMN_RELEASE_DATE),
+                        data.getInt(DBConst.GAME_COLUMN_DEV_INFO)));
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -51,7 +51,7 @@ public class GameTable  implements GameDao {
      */
     @Override
     public Game getGame(int id) {
-        String sql = "SELECT * FROM " + DBConst.GAME_COLUMN_ID + " WHERE " + DBConst.GAME_CATEGORY_COLUMN_ID + " = " + id;
+        String sql = "SELECT * FROM " + DBConst.GAME_COLUMN_ID + " WHERE " + DBConst.GAME_COLUMN_ID + " = " + id;
         Game game = new Game();
 
         try {
@@ -62,6 +62,7 @@ public class GameTable  implements GameDao {
                 games.add(new Game(data.getInt(DBConst.GAME_COLUMN_ID),
                         data.getString(DBConst.GAME_COLUMN_NAME),
                         data.getString(DBConst.GAME_COLUMN_IMAGE),
+                        data.getInt(DBConst.GAME_COLUMN_CATEGORY),
                         data.getInt(DBConst.GAME_COLUMN_PLATFORM),
                         data.getString(DBConst.GAME_COLUMN_DEV_INFO),
                         data.getInt(DBConst.GAME_COLUMN_RELEASE_DATE)));
@@ -92,15 +93,16 @@ public class GameTable  implements GameDao {
      *
      * @param game This will allow the user to insert a new game into the dataBase
      */
-
     @Override
     public void createGame(Game game) {
         String sql = "INSERT INTO " + DBConst.TABLE_GAME +
                 "(" + DBConst.GAME_COLUMN_NAME + "," +
                 DBConst.GAME_COLUMN_IMAGE + "," +
+                DBConst.GAME_COLUMN_PLATFORM + "," +
+                DBConst.GAME_COLUMN_CATEGORY + "," +
                 DBConst.GAME_COLUMN_RELEASE_DATE + "," +
                 DBConst.GAME_COLUMN_DEV_INFO + ") VALUES ('" +
-                game.getName() + "','" + game.getImage() + "','" + game.getReleaseDate() + "','" + game.getDevInfo() + "')";
+                game.getName() + "','" + game.getImage() + "','" + game.getPlatform() + "','" + game.getCategory() +"','" + game.getReleaseDate() + "','" + game.getDevInfo() + "')";
         try {
             database.getConnection().createStatement().execute(sql);
             System.out.println("Inserted Record");
@@ -108,6 +110,4 @@ public class GameTable  implements GameDao {
             e.printStackTrace();
         }
     }
-
-
 }
