@@ -1,15 +1,14 @@
 package tabs;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
-import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -27,7 +26,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class AddGameTab extends Tab {
@@ -40,24 +38,27 @@ public class AddGameTab extends Tab {
     // Private constructor so AddGameTab is a singleton.
     private AddGameTab() {
         this.setText("Add Game");
-        GameTable gameTable = new GameTable();
-        DevInfoTable devInfoTable = new DevInfoTable();
-        PlatformTable platformTable = new PlatformTable();
+
+        //Adding the tables to the class to use them
         CategoryTable categoryTable = new CategoryTable();
+        DevInfoTable devInfoTable = new DevInfoTable();
+        GameTable gameTable = new GameTable();
+        PlatformTable platformTable = new PlatformTable();
 
         GridPane root = new GridPane();
         root.setHgap(10);
         root.setVgap(10);
         root.setPadding(new Insets(10, 10, 10, 10));
 
+        //Text and TextField for adding games
+        Text nameOfGame = new Text("Name Of Game");
+        root.add(nameOfGame, 0, 0);
+        TextField gameName = new TextField();
+        gameName.setPromptText("Enter Name of Game here");
+        root.add(gameName, 1, 0);
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image");
-
-        // Create game name input
-        Text gameNameText = new Text("Game Name");
-        root.add(gameNameText, 0, 0);
-        TextField gameName = new TextField();
-        root.add(gameName, 1, 0);
 
         // Create image input
         Text gameImageText = new Text("Select Image");
@@ -80,24 +81,60 @@ public class AddGameTab extends Tab {
         DatePicker gameReleaseYear = new DatePicker();
         root.add(gameReleaseYear, 1, 2);
 
-        // Create game developer input
-        Text gameDeveloperText = new Text("Game Developer");
-        root.add(gameDeveloperText, 0, 3);
-        TextField gameDeveloper = new TextField();
-        root.add(gameDeveloper, 1, 3);
+        // DevInfo ComboBox
+        Text gameDevInfo = new Text("Developer and Publisher");
+        root.add(gameDevInfo, 0, 3);
+        ComboBox<DevInfo> devInfoComboBox = new ComboBox<>();
+        devInfoComboBox.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
+        root.add(devInfoComboBox, 1, 3);
 
-        // Create game publisher input
-        Text gamePublisherText = new Text("Game Publisher");
-        root.add(gamePublisherText, 0, 4);
-        TextField gamePublisher = new TextField();
-        root.add(gamePublisher, 1, 4);
+        // Create devInfo button
+        Button createDevInfo = new Button("Add New Developer and Publisher");
+        createDevInfo.setOnAction(e -> {
+            // Create grid pane for new window
+            GridPane createDevInfoGrid = new GridPane();
+            createDevInfoGrid.setHgap(10);
+            createDevInfoGrid.setVgap(10);
+            createDevInfoGrid.setPadding(new Insets(10, 10, 10, 10));
 
-        // Create game platform input
-        Text gamePlatformText = new Text("Game Platforms");
-        root.add(gamePlatformText, 0, 5);
+            // Create Developer name input
+            Text developerNameText = new Text("Developer");
+            createDevInfoGrid.add(developerNameText, 0, 0);
+            TextField developerName = new TextField();
+            createDevInfoGrid.add(developerName, 1, 0);
+
+            // Create Publisher name input
+            Text publisherNameText = new Text("Publisher");
+            createDevInfoGrid.add(publisherNameText, 0, 1);
+            TextField publisherName = new TextField();
+            createDevInfoGrid.add(publisherName, 1, 1);
+
+            // Create create button
+            Button addDevInfo = new Button("Create DevInfo");
+            createDevInfoGrid.add(addDevInfo, 0, 2);
+
+            Scene createPlatformScene = new Scene(createDevInfoGrid, 400, 300);
+
+            // New window (Stage)
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Create Platform");
+            newWindow.setScene(createPlatformScene);
+            newWindow.show();
+
+            addDevInfo.setOnAction(event -> {
+                DevInfo devInfo = new DevInfo(developerName.getText(), publisherName.getText());
+                devInfoTable.createDevInfo(devInfo);
+                newWindow.close();
+            });
+        });
+        root.add(createDevInfo, 2, 3);
+
+        //Text and ComboBox for platform
+        Text gamePlatformText = new Text("Platform");
+        root.add(gamePlatformText, 0, 4);
         ComboBox<Platform> gamePlatform = new ComboBox<>();
         gamePlatform.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
-        root.add(gamePlatform, 1, 5);
+        root.add(gamePlatform, 1, 4);
 
         // Create create platform button
         Button createPlatform = new Button("Add New Platform");
@@ -118,12 +155,12 @@ public class AddGameTab extends Tab {
             Button addPlatform = new Button("Create Platform");
             createPlatformGrid.add(addPlatform, 0, 1);
 
-            Scene createPlatformScene = new Scene(createPlatformGrid, 400, 300);
+            Scene createDevInfoScene = new Scene(createPlatformGrid, 400, 300);
 
             // New window (Stage)
             Stage newWindow = new Stage();
-            newWindow.setTitle("Create Platform");
-            newWindow.setScene(createPlatformScene);
+            newWindow.setTitle("Create DevInfo");
+            newWindow.setScene(createDevInfoScene);
             newWindow.show();
 
             addPlatform.setOnAction(event -> {
@@ -132,15 +169,14 @@ public class AddGameTab extends Tab {
                 newWindow.close();
             });
         });
-        root.add(createPlatform, 2, 5);
+        root.add(createPlatform, 2, 4);
 
-        // Create game categories input
-        Text gameCategoriesText = new Text("Game Categories");
-        root.add(gameCategoriesText, 0, 6);
-        ListView<Category> gameCategories = new ListView<>();
-        gameCategories.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        gameCategories.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
-        root.add(gameCategories, 1, 6);
+        //Text and ComboBox for adding Category
+        Text gameCategoriesText = new Text("Category");
+        root.add(gameCategoriesText, 0, 5);
+        ComboBox<Category> gameCategory = new ComboBox<>();
+        gameCategory.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        root.add(gameCategory, 1, 5);
 
         // Create create category button
         Button createCategory = new Button("Add New Category");
@@ -175,7 +211,7 @@ public class AddGameTab extends Tab {
                 newWindow.close();
             });
         });
-        root.add(createCategory, 2, 6);
+        root.add(createCategory, 2, 5);
 
         Button addGameButton = new Button("Add Game");
         addGameButton.setOnAction(event -> {
@@ -183,12 +219,14 @@ public class AddGameTab extends Tab {
                     gameName.getText(),
                     imagePath,
                     gamePlatform.getSelectionModel().getSelectedItem().getId(),
-                    gameReleaseYear.toString(),
-                    new DevInfo(gameDeveloper.getText(), gamePublisher.getText()).getId()
+                    gameCategory.getSelectionModel().getSelectedItem().getId(),
+                    gameReleaseYear.getValue().toString(),
+                    devInfoComboBox.getSelectionModel().getSelectedItem().getId()
             );
+            System.out.println(gamePlatform.getSelectionModel().getSelectedItem().getId());
             gameTable.createGame(game);
         });
-        root.add(addGameButton, 0, 7);
+        root.add(addGameButton, 0, 6);
 
         this.setContent(root);
     }
@@ -221,4 +259,3 @@ public class AddGameTab extends Tab {
         return tab;
     }
 }
-
