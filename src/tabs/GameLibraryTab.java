@@ -33,7 +33,7 @@ public class GameLibraryTab extends Tab {
         //Will Only show if there are games in the dataBase
         if (!gameTable.getAllGames().isEmpty()) {
 
-            if (gameInfo.getImage().isEmpty()) {
+            if (gameInfo.getImage() == null) {
                 //Will set the text to No Image Provided
                 Text noImage = new Text("No Image Provided");
                 //Sets the image to center textAlignment
