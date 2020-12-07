@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -24,10 +26,12 @@ import tables.PlatformTable;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
+/**
+ * @author Chris Corbett
+ *
+ */
 public class AddGameTab extends Tab {
 
     // Create private instance variable.
@@ -64,11 +68,25 @@ public class AddGameTab extends Tab {
         Text gameImageText = new Text("Select Image");
         root.add(gameImageText, 0, 1);
         Button imageButton = new Button("Select Image");
+        ImageView gameImage = new ImageView();
+        root.add(gameImage, 2, 1);
 
         imageButton.setOnAction(e -> {
             File file = fileChooser.showOpenDialog(GameTracker.getStage());
             try {
+                // Move the image into the source directory
                 imagePath = getImage(file);
+
+                // Set the ImageView to the selected image.
+                File imageFile = new File(imagePath);
+                Image image = new Image(imageFile.toURI().toString());
+                gameImage.setImage(image);
+
+                // Resize image and keep aspect ratio.
+                double ratio = image.getHeight() / image.getWidth();
+                double newHeight = 200;
+                gameImage.setFitHeight(newHeight);
+                gameImage.setFitWidth(newHeight / ratio);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -124,6 +142,7 @@ public class AddGameTab extends Tab {
             addDevInfo.setOnAction(event -> {
                 DevInfo devInfo = new DevInfo(developerName.getText(), publisherName.getText());
                 devInfoTable.createDevInfo(devInfo);
+                devInfoComboBox.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
                 newWindow.close();
             });
         });
@@ -166,6 +185,7 @@ public class AddGameTab extends Tab {
             addPlatform.setOnAction(event -> {
                 Platform platform = new Platform(platformName.getText());
                 platformTable.createPlatform(platform);
+                gamePlatform.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
                 newWindow.close();
             });
         });
@@ -208,6 +228,7 @@ public class AddGameTab extends Tab {
             addCategory.setOnAction(event -> {
                 Category category = new Category(categoryName.getText());
                 categoryTable.createCategory(category);
+                gameCategory.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 newWindow.close();
             });
         });
@@ -244,7 +265,8 @@ public class AddGameTab extends Tab {
             }
 
             // Move the image to the images directory
-            Files.move(Paths.get(file.toURI()), Paths.get(newFile.toURI()));
+            //Files.move(Paths.get(file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.COPY_ATTRIBUTES);
+            Files.copy(Paths.get(file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
 
             return newFile.getAbsolutePath();
         }

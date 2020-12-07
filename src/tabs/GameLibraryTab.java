@@ -9,6 +9,7 @@ import javafx.scene.text.TextAlignment;
 import pojo.Game;
 import tables.GameTable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameLibraryTab extends Tab {
@@ -19,7 +20,7 @@ public class GameLibraryTab extends Tab {
     static int page = 0;
 
     // Private constructor so GameLibraryTab is a singleton.
-    private GameLibraryTab() {
+    private GameLibraryTab() throws IOException {
         this.setText("Game Library");
         //Grabs and localizes the gameTable
         GameTable gameTable = new GameTable();
@@ -100,7 +101,7 @@ public class GameLibraryTab extends Tab {
 
 
     // Get instance method.
-    public static GameLibraryTab getInstance() {
+    public static GameLibraryTab getInstance() throws IOException {
         if (tab == null) {
             tab = new GameLibraryTab();
         }
