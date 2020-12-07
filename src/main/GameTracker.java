@@ -1,18 +1,28 @@
 package main;
 
+import com.mysql.cj.protocol.Message;
 import database.Database;
+import database.GetLogin;
+import database.Login;
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import tabs.AddGameTab;
 import tabs.GameLibraryTab;
 import tabs.RemoveGameTab;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 
 public class GameTracker extends Application {
 
@@ -71,9 +81,82 @@ public class GameTracker extends Application {
         stage.setTitle("Game Management System");
         stage.show();
 
-        this.stage = stage;
+        GameTracker.stage = stage;
+
+        getLoginInfo();
+
+        GetLogin.getLoginInfo();
 
         Database database = Database.getInstance();
+    }
+
+    public static void getLoginInfo() {
+        File loginFile = new File("src/login/login.txt");
+        if (!loginFile.isFile()) {
+
+            // Create grid pane for new window
+            GridPane createLoginInfo = new GridPane();
+            createLoginInfo.setHgap(10);
+            createLoginInfo.setVgap(10);
+            createLoginInfo.setPadding(new Insets(10, 10, 10, 10));
+
+            // Create username input.
+            Text userNameText = new Text("Username");
+            createLoginInfo.add(userNameText, 0, 0);
+            TextField userName = new TextField();
+            createLoginInfo.add(userName, 1, 0);
+
+            // Create database input
+            Text userDatabaseText = new Text("Database");
+            createLoginInfo.add(userDatabaseText, 0, 1);
+            TextField userDatabase = new TextField();
+            createLoginInfo.add(userDatabase, 1, 1);
+
+            // Create password input
+            Text userPasswordText = new Text("Password");
+            createLoginInfo.add(userPasswordText, 0, 2);
+            TextField userPassword = new TextField();
+            createLoginInfo.add(userPassword, 1, 2);
+
+            // Create database location input
+            Text userDatabaseLocationText = new Text("Database Location");
+            createLoginInfo.add(userDatabaseLocationText, 0, 3);
+            TextField userDatabaseLocation = new TextField();
+            createLoginInfo.add(userDatabaseLocation, 1, 3);
+
+            // Create finish button
+            Button finishButton = new Button("Finish");
+            createLoginInfo.add(finishButton, 0, 4);
+
+            Scene createPlatformScene = new Scene(createLoginInfo, 400, 300);
+
+            // New window (Stage)
+            Stage newWindow = new Stage();
+            newWindow.setTitle("Database Login Information");
+            newWindow.setScene(createPlatformScene);
+            newWindow.show();
+
+            finishButton.setOnAction(e -> {
+                String[] userLoginInfo = {userDatabase.getText(), userName.getText(), userPassword.getText(), userDatabaseLocation.getText()};
+                String login = String.join(",", userLoginInfo);
+
+                try {
+                    loginFile.getParentFile().mkdirs();
+                    loginFile.createNewFile();
+                    FileOutputStream oFile = new FileOutputStream(loginFile);
+
+                    byte[] loginBytes = login.getBytes();
+
+                    oFile.write(loginBytes);
+                    oFile.close();
+
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+
+                newWindow.close();
+            });
+        }
     }
 
     public static Stage getStage() {

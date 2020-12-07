@@ -36,7 +36,7 @@ public class AddGameTab extends Tab {
     private String imagePath;
 
     // Private constructor so AddGameTab is a singleton.
-    private AddGameTab() {
+    private AddGameTab() throws IOException {
         this.setText("Add Game");
 
         //Adding the tables to the class to use them
@@ -252,7 +252,7 @@ public class AddGameTab extends Tab {
     }
 
     // Get instance method.
-    public static AddGameTab getInstance() {
+    public static AddGameTab getInstance() throws IOException {
         if (tab == null) {
             tab = new AddGameTab();
         }

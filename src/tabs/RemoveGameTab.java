@@ -10,6 +10,7 @@ import pojo.Game;
 import tables.GameTable;
 
 import javax.swing.border.Border;
+import java.io.IOException;
 
 public class RemoveGameTab extends Tab {
 
@@ -17,7 +18,7 @@ public class RemoveGameTab extends Tab {
     private static RemoveGameTab tab;
 
     // Private constructor so GameLibraryTab is a singleton.
-    private RemoveGameTab() {
+    private RemoveGameTab() throws IOException {
         this.setText("Remove Game");
 
         //add game table to class
@@ -57,7 +58,7 @@ public class RemoveGameTab extends Tab {
     }
 
     // Get instance method.
-    public static RemoveGameTab getInstance() {
+    public static RemoveGameTab getInstance() throws IOException {
         if (tab == null) {
             tab = new RemoveGameTab();
         }

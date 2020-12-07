@@ -1,5 +1,6 @@
 package database;
 
+import java.io.IOException;
 import java.sql.*;
 
 public class Database {
@@ -8,12 +9,19 @@ public class Database {
     private Connection connection = null;
 
     // Private constructor
-    private Database() {
+    private Database() throws IOException {
+
+        String[] loginInfo = GetLogin.getLoginInfo();
+        final String DB_NAME = loginInfo[0];
+        final String DB_USER = loginInfo[1];
+        final String DB_PASSWORD = loginInfo[2];
+        final String DB_LOCATION = loginInfo[3];
+
         if (connection == null) {
             try {
                 // Create connection to the server
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://localhost/" + Login.DB_NAME + "?serverTimezone=UTC", Login.DB_USER, Login.DB_PASSWORD);
+                connection = DriverManager.getConnection("jdbc:mysql://" + DB_LOCATION + "/" + DB_NAME + "?serverTimezone=UTC", DB_USER, DB_PASSWORD);
                 System.out.println("Created Connection");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -32,7 +40,7 @@ public class Database {
     }
 
     // getInstance method for singleton
-    public static Database getInstance() {
+    public static Database getInstance() throws IOException {
         if (instance == null) {
             instance = new Database();
         }

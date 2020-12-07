@@ -15,6 +15,7 @@
 
 src/database/Login.java
 src/images/
+src/login/
 
 # Generated files
 .idea/**/contentModel.xml
