@@ -58,9 +58,10 @@ public class RemoveGameTab extends Tab {
 
     }
     //The function to refresh the list of games
-    public void refreshGameBox(){
+    public void refreshGameBox() throws IOException {
+        GameTable gameTable = new GameTable();
         gameComboBox.getItems().clear();
-        gameComboBox.getItems().addAll(gameComboBox.getItems());
+        gameComboBox.setItems(FXCollections.observableList(gameTable.getAllGames()));
     }
 
     // Get instance method.
