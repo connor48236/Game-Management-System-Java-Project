@@ -1,13 +1,22 @@
 package tabs;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import pojo.Category;
+import pojo.DevInfo;
 import pojo.Game;
+import pojo.Platform;
+import tables.CategoryTable;
+import tables.DevInfoTable;
 import tables.GameTable;
+import tables.PlatformTable;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,89 +25,83 @@ public class GameLibraryTab extends Tab {
 
     // Create private instance variable.
     private static GameLibraryTab tab;
-    //Creates the page int for changing games
-    static int page = 0;
+
+    // Grabs and localizes the gameTable
+    private GameTable gameTable;
+
+    // Connects gameTableView to a new TableView
+    private TableView gameTableView;
 
     // Private constructor so GameLibraryTab is a singleton.
     private GameLibraryTab() throws IOException {
         this.setText("Game Library");
-        //Grabs and localizes the gameTable
-        GameTable gameTable = new GameTable();
+
+        // Grabs and localizes the gameTable
+        gameTable = new GameTable();
+
+        CategoryTable categoryTable = new CategoryTable();
+        DevInfoTable devInfoTable = new DevInfoTable();
+        PlatformTable platformTable = new PlatformTable();
+
+        //connects gameTableView to a new TableView
+        gameTableView = new TableView();
+
+        //Creates the first column for the table for the name of the game
+        TableColumn<Game, String> column1 = new TableColumn<>("Game Title");
+        //Adds the game title to the column
+        column1.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getName()));
+        //Adds the column to the table
+        gameTableView.getColumns().add(column1);
+
+        //Creates the column of the table for the image
+        TableColumn<Game, String> column2 = new TableColumn<>("Game Image");
+        //Adds the game image to the column
+        column2.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getImage()));
+        //Adds the column to the table
+        gameTableView.getColumns().add(column2);
+
+        //Creates the column of the table for the platform
+        TableColumn<Game, String> column3 = new TableColumn<>("Game Platform");
+        //Adds the game platform to the column
+        column3.setCellValueFactory(e -> new SimpleStringProperty(platformTable.getPlatform(e.getValue().getPlatform()).getName()));
+        //Adds the column to the table
+        gameTableView.getColumns().add(column3);
+
+        //Creates the column of the table for the Category
+        TableColumn<Game, String> column4 = new TableColumn<>("Game Category");
+        //Adds the game category to the column
+        column4.setCellValueFactory(e -> new SimpleStringProperty(categoryTable.getCategory(e.getValue().getCategory()).getName()));
+        //Adds the column to the table
+       gameTableView.getColumns().add(column4);
+
+        //Creates the column of the table for the release date
+        TableColumn<Game, String> column5 = new TableColumn<>("Game Release Date");
+        //Adds the game Date to the column
+        column5.setCellValueFactory(e -> new SimpleStringProperty(e.getValue().getReleaseDate()));
+        //Adds the column to the table
+        gameTableView.getColumns().add(column5);
+
+        //Creates the column of the table for the DevInfo
+      TableColumn<Game, String> column6 = new TableColumn<>("Game Developer Info");
+        //Adds the game dev info to the column
+       column6.setCellValueFactory(e -> new SimpleStringProperty("Developer " + devInfoTable.getDevInfo(e.getValue().getDevInfo()).getDeveloperName() + " , " +
+               "Publisher " + devInfoTable.getDevInfo(e.getValue().getDevInfo()).getPublisherName()));
+        //Adds the column to the table
+        gameTableView.getColumns().add(column6);
+
+        //adds all items to gameTableView
+        gameTableView.getItems().addAll(gameTable.getAllGames());
 
 
-        //Sets gameInfo to a game based on ID
-        Game gameInfo = gameTable.getGame(page);
-        //Adds The borderPane
-        BorderPane root = new BorderPane();
-
-        //Will Only show if there are games in the dataBase
-        if (!gameTable.getAllGames().isEmpty()) {
-
-            if (gameInfo.getImage() == null) {
-                //Will set the text to No Image Provided
-                Text noImage = new Text("No Image Provided");
-                //Sets the image to center textAlignment
-                noImage.setTextAlignment(TextAlignment.CENTER);
-                //Will set the text to the center of the root
-                root.setCenter(noImage);
-            } else{
-                //Sets gameImage to the game Image of that id
-                ImageView gameImage = new ImageView(gameInfo.getImage());
-                //sets the game Image to center
-                root.setCenter(gameImage);
-        }
-
-            //Sets gameName to the game name based on id
-            Text gameName = new Text(gameInfo.getName());
-            //This will set the text to center
-            gameName.setTextAlignment(TextAlignment.CENTER);
-            //This will set the gameName to the bottom of the root
-            root.setBottom(gameName);
-
-            //Setting up the nextGame Button
-            Button nextGame = new Button("Next Game");
-            //OnClick of this Button it will add 1 to page going to the next game
-            //If page = the size of all the game "The end" it will set the page to zero
-            nextGame.setOnAction(e -> {
-                if (page == gameTable.getAllGames().size()) {
-                    page = 0;
-                } else {
-                    page++;
-                }
-            });
-            //This will set the button to the right
-            root.setRight(nextGame);
-
-            //This sets up the previousGame button
-            Button previousGame = new Button("Previous Game");
-            //On click of this button it will go back a game unless it is at 0
-            //Then it will set the page to the end of the list
-            previousGame.setOnAction(e -> {
-                if (page == 0) {
-                    page = gameTable.getAllGames().size();
-                } else {
-                    page--;
-                }
-            });
-            //This will set the button to the left side
-            root.setLeft(previousGame);
-
-            //Will show if there are no games
-        }else {
-            //This sets the text
-            Text pleaseInsertGame = new Text("Please Insert A Game To View");
-            //This will set the text to center
-            pleaseInsertGame.setTextAlignment(TextAlignment.CENTER);
-            //This will set the text to the center of root
-            root.setCenter(pleaseInsertGame);
-        }
-
-        //This sets the content to root "BorderPane"
-        this.setContent(root);
-
+        //Added the gameTableView to the Screen
+       this.setContent(gameTableView);
     }
 
-
+    public void updateLibrary() {
+        gameTableView.getItems().clear();
+        gameTableView.getItems().addAll(gameTable.getAllGames());
+        System.out.println("Library updated");
+    }
 
     // Get instance method.
     public static GameLibraryTab getInstance() throws IOException {

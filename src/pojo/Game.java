@@ -32,7 +32,6 @@ public class Game {
         this.category = category;
         this.releaseDate = releaseDate;
         this.devInfo = devInfo;
-
     }
 
     // Getters and Setters

@@ -246,6 +246,12 @@ public class AddGameTab extends Tab {
             );
             System.out.println(gamePlatform.getSelectionModel().getSelectedItem().getId());
             gameTable.createGame(game);
+            try {
+                GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
+                gameLibraryTab.updateLibrary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         root.add(addGameButton, 0, 6);
 
