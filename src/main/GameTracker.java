@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import tabs.AddGameTab;
 import tabs.GameLibraryTab;
 import tabs.RemoveGameTab;
+import tabs.StatsTab;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,13 +57,15 @@ public class GameTracker extends Application {
 
         // Create tab pane
         TabPane tabPane = new TabPane();
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         // Add tabs to tab pane
         GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
         AddGameTab addGameTab = AddGameTab.getInstance();
         RemoveGameTab removeGameTab = RemoveGameTab.getInstance();
+        StatsTab statsTab = StatsTab.getInstance();
 
-        tabPane.getTabs().addAll(gameLibraryTab, addGameTab, removeGameTab);
+        tabPane.getTabs().addAll(gameLibraryTab, addGameTab, removeGameTab, statsTab);
         tabPane.setSide(Side.LEFT);
 
         // Create border pane

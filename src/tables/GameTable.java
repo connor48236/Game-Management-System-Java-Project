@@ -3,11 +3,16 @@ package tables;
 import daos.GameDao;
 import database.DBConst;
 import database.Database;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import pojo.DevInfo;
 import pojo.Game;
+import pojo.PrettyGame;
 
 import javax.xml.crypto.Data;
+import java.io.File;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,7 +31,6 @@ public class GameTable  implements GameDao {
      *
      * @return This will find all games in the database and return them
      */
-    @Override
     public ArrayList<Game> getAllGames() {
         String sql = "SELECT * FROM " + DBConst.TABLE_GAME;
         games = new ArrayList<Game>();
@@ -46,6 +50,31 @@ public class GameTable  implements GameDao {
             e.printStackTrace();
         }
         return games;
+    }
+
+    /**
+     *
+     * @return This will find all games in the database and return them
+     */
+    public ArrayList<PrettyGame> getAllPrettyGames() {
+        String sql = "SELECT * FROM " + DBConst.TABLE_GAME;
+        ArrayList<PrettyGame> prettyGames = new ArrayList<>();
+        try {
+            Statement getGames = database.getConnection().createStatement();
+            ResultSet data = getGames.executeQuery(sql);
+            while (data.next()){
+                prettyGames.add(new PrettyGame(data.getInt(DBConst.GAME_COLUMN_ID),
+                        data.getString(DBConst.GAME_COLUMN_NAME),
+                        new Image(String.valueOf(new File(data.getString(DBConst.GAME_COLUMN_IMAGE)).toURI())),
+                        data.getInt(DBConst.GAME_COLUMN_PLATFORM),
+                        data.getInt(DBConst.GAME_COLUMN_CATEGORY),
+                        data.getString(DBConst.GAME_COLUMN_RELEASE_DATE),
+                        data.getInt(DBConst.GAME_COLUMN_DEV_INFO)));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return prettyGames;
     }
 
     /**
@@ -113,5 +142,21 @@ public class GameTable  implements GameDao {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public int getCategoryCount(int category) {
+        int count = -1;
+        try {
+            PreparedStatement getCount = database.getConnection()
+                    .prepareStatement("SELECT * FROM " + DBConst.TABLE_GAME + " WHERE " +
+                            DBConst.GAME_COLUMN_CATEGORY + " = '" + category + "'", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet data = getCount.executeQuery();
+            data.last();
+            count = data.getRow();
+            System.out.println(count);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

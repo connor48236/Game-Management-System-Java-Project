@@ -41,20 +41,19 @@ public class RemoveGameTab extends Tab {
         deleteButton.setOnAction(e->{
             Game game = (Game) gameComboBox.getSelectionModel().getSelectedItem();
             gameTable.deleteGame(game.getId());
-            refreshGameBox();
+            gameComboBox.setItems(FXCollections.observableList(gameTable.getAllGames()));
+            try {
+                GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
+                gameLibraryTab.updateLibrary();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
         //adding the button to root
         root.setBottom(deleteButton);
         this.setContent(root);
 
-    }
-
-    //The function to refresh the list of games
-    public void refreshGameBox(){
-        ComboBox gameComboBox = new ComboBox();
-        gameComboBox.getItems().clear();
-        gameComboBox.getItems().addAll(gameComboBox.getItems());
     }
 
     // Get instance method.
