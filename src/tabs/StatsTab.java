@@ -6,9 +6,8 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.BorderPane;
 import pojo.Category;
-import pojo.Game;
+import pojo.Platform;
 import tables.CategoryTable;
-import tables.DevInfoTable;
 import tables.GameTable;
 import tables.PlatformTable;
 
@@ -18,29 +17,59 @@ import java.util.ArrayList;
 public class StatsTab extends Tab {
 
     private static StatsTab tab;
-    private PieChart chart;
+    private PieChart categoryChart;
+    private PieChart platformChart;
 
     private StatsTab() throws IOException {
         this.setText("Statistics");
         BorderPane pane = new BorderPane();
-        chart = new PieChart();
-        chart.setTitle("All Game Categories");
-        chart.setVisible(true);
-        generateChart();
-        pane.setCenter(chart);
+
+        // Create the category chart
+        categoryChart = new PieChart();
+        categoryChart.setTitle("All Game Categories");
+        categoryChart.setVisible(true);
+        generateCategoryChart();
+        pane.setLeft(categoryChart);
+
+        // Create the platform chart
+        platformChart = new PieChart();
+        platformChart.setTitle("All Game Platforms");
+        categoryChart.setVisible(true);
+        generatePlatformChart();
+        pane.setCenter(platformChart);
 
         // Set the borderpane as the content of the tab
         this.setContent(pane);
     }
 
-    private void generateChart() throws IOException {
+    public void generatePlatformChart() throws IOException {
+        GameTable gameTable = new GameTable();
+        PlatformTable platformTable = new PlatformTable();
+
+        ArrayList<Platform> platforms = platformTable.getAllPlatforms();
+
+        platformChart.getData().clear();
+
+        ArrayList<PieChart.Data> data = new ArrayList<>();
+        for (Platform platform : platforms) {
+            if (gameTable.getPlatformCount(platform.getId()) > 0) {
+                data.add(new PieChart.Data(platform.getName(), gameTable.getPlatformCount(platform.getId())));
+            }
+        }
+
+        ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList(data);
+
+        platformChart.setData(chartData);
+    }
+
+    public void generateCategoryChart() throws IOException {
 
         GameTable gameTable = new GameTable();
         CategoryTable categoryTable = new CategoryTable();
 
         ArrayList<Category> categories = categoryTable.getAllCategories();
 
-        chart.getData().clear();
+        categoryChart.getData().clear();
 
         ArrayList<PieChart.Data> data = new ArrayList<>();
         for (Category category : categories) {
@@ -50,11 +79,8 @@ public class StatsTab extends Tab {
         }
 
         ObservableList<PieChart.Data> chartData = FXCollections.observableArrayList(data);
-        for (PieChart.Data d : data) {
-            System.out.println("Pie chart data: " + d);
-        }
 
-        chart.setData(chartData);
+        categoryChart.setData(chartData);
     }
 
     public static StatsTab getInstance() throws IOException {

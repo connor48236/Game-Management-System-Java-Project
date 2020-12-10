@@ -153,7 +153,21 @@ public class GameTable  implements GameDao {
             ResultSet data = getCount.executeQuery();
             data.last();
             count = data.getRow();
-            System.out.println(count);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int getPlatformCount(int platform) {
+        int count = -1;
+        try {
+            PreparedStatement getCount = database.getConnection()
+                    .prepareStatement("SELECT * FROM " + DBConst.TABLE_GAME + " WHERE " +
+                            DBConst.GAME_COLUMN_PLATFORM + " = '" + platform + "'", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet data = getCount.executeQuery();
+            data.last();
+            count = data.getRow();
         } catch (SQLException e) {
             e.printStackTrace();
         }

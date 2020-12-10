@@ -47,6 +47,8 @@ public class RemoveGameTab extends Tab {
             try {
                 GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
                 gameLibraryTab.updateLibrary();
+                StatsTab.getInstance().generatePlatformChart();
+                StatsTab.getInstance().generateCategoryChart();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
