@@ -16,6 +16,8 @@ public class RemoveGameTab extends Tab {
     // Create private instance variable.
     private static RemoveGameTab tab;
 
+    public ComboBox gameComboBox;
+
     // Private constructor so GameLibraryTab is a singleton.
     private RemoveGameTab() {
         this.setText("Remove Game");
@@ -31,7 +33,7 @@ public class RemoveGameTab extends Tab {
         root.setTop(pickAGame);
 
         //add the list for games to pick from
-        ComboBox<Game> gameComboBox = new ComboBox<>();
+        gameComboBox = new ComboBox<>();
         gameComboBox.setItems(FXCollections.observableList(gameTable.getAllGames()));
         root.setCenter(gameComboBox);
 
@@ -51,7 +53,6 @@ public class RemoveGameTab extends Tab {
 
     //The function to refresh the list of games
     public void refreshGameBox(){
-        ComboBox gameComboBox = new ComboBox();
         gameComboBox.getItems().clear();
         gameComboBox.getItems().addAll(gameComboBox.getItems());
     }

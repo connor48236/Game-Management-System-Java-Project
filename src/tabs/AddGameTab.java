@@ -35,6 +35,10 @@ public class AddGameTab extends Tab {
 
     private String imagePath;
 
+    public ComboBox<DevInfo> devInfoCombo;
+    public ComboBox<Platform> platformComboBox;
+    public ComboBox<Category> categoryComboBox;
+
     // Private constructor so AddGameTab is a singleton.
     private AddGameTab() {
         this.setText("Add Game");
@@ -84,9 +88,9 @@ public class AddGameTab extends Tab {
         // DevInfo ComboBox
         Text gameDevInfo = new Text("Developer and Publisher");
         root.add(gameDevInfo, 0, 3);
-        ComboBox<DevInfo> devInfoComboBox = new ComboBox<>();
-        devInfoComboBox.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
-        root.add(devInfoComboBox, 1, 3);
+        devInfoCombo = new ComboBox<>();
+        devInfoCombo.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
+        root.add(devInfoCombo, 1, 3);
 
         // Create devInfo button
         Button createDevInfo = new Button("Add New Developer and Publisher");
@@ -125,6 +129,9 @@ public class AddGameTab extends Tab {
                 DevInfo devInfo = new DevInfo(developerName.getText(), publisherName.getText());
                 devInfoTable.createDevInfo(devInfo);
                 newWindow.close();
+                //Refresh the dev info
+                devInfoCombo.getItems().clear();
+                devInfoCombo.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
             });
         });
         root.add(createDevInfo, 2, 3);
@@ -132,9 +139,9 @@ public class AddGameTab extends Tab {
         //Text and ComboBox for platform
         Text gamePlatformText = new Text("Platform");
         root.add(gamePlatformText, 0, 4);
-        ComboBox<Platform> gamePlatform = new ComboBox<>();
-        gamePlatform.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
-        root.add(gamePlatform, 1, 4);
+        platformComboBox = new ComboBox<>();
+        platformComboBox.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
+        root.add(platformComboBox, 1, 4);
 
         // Create create platform button
         Button createPlatform = new Button("Add New Platform");
@@ -167,6 +174,9 @@ public class AddGameTab extends Tab {
                 Platform platform = new Platform(platformName.getText());
                 platformTable.createPlatform(platform);
                 newWindow.close();
+                //Refresh the platforms
+                platformComboBox.getItems().clear();
+                platformComboBox.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
             });
         });
         root.add(createPlatform, 2, 4);
@@ -174,9 +184,9 @@ public class AddGameTab extends Tab {
         //Text and ComboBox for adding Category
         Text gameCategoriesText = new Text("Category");
         root.add(gameCategoriesText, 0, 5);
-        ComboBox<Category> gameCategory = new ComboBox<>();
-        gameCategory.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
-        root.add(gameCategory, 1, 5);
+        categoryComboBox = new ComboBox<>();
+        categoryComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+        root.add(categoryComboBox, 1, 5);
 
         // Create create category button
         Button createCategory = new Button("Add New Category");
@@ -209,6 +219,10 @@ public class AddGameTab extends Tab {
                 Category category = new Category(categoryName.getText());
                 categoryTable.createCategory(category);
                 newWindow.close();
+                //Refresh the category
+                categoryComboBox.getItems().clear();
+                categoryComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+
             });
         });
         root.add(createCategory, 2, 5);
@@ -218,13 +232,17 @@ public class AddGameTab extends Tab {
             Game game = new Game(
                     gameName.getText(),
                     imagePath,
-                    gamePlatform.getSelectionModel().getSelectedItem().getId(),
-                    gameCategory.getSelectionModel().getSelectedItem().getId(),
+                    platformComboBox.getSelectionModel().getSelectedItem().getId(),
+                    categoryComboBox.getSelectionModel().getSelectedItem().getId(),
                     gameReleaseYear.getValue().toString(),
-                    devInfoComboBox.getSelectionModel().getSelectedItem().getId()
+                    devInfoCombo.getSelectionModel().getSelectedItem().getId()
             );
-            System.out.println(gamePlatform.getSelectionModel().getSelectedItem().getId());
+            System.out.println(platformComboBox.getSelectionModel().getSelectedItem().getId());
             gameTable.createGame(game);
+            //refresh after entered
+            RemoveGameTab.getInstance().refreshGameBox();
+            GameLibraryTab.getInstance().refreshGameList();
+
         });
         root.add(addGameButton, 0, 6);
 
@@ -250,6 +268,7 @@ public class AddGameTab extends Tab {
         }
         return null;
     }
+
 
     // Get instance method.
     public static AddGameTab getInstance() {

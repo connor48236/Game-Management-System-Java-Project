@@ -1,10 +1,7 @@
 package tabs;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
@@ -27,6 +24,8 @@ public class GameLibraryTab extends Tab {
     //Creates the page int for changing games
     static int page = 0;
 
+    public TableView gameTableView;
+
     // Private constructor so GameLibraryTab is a singleton.
     private GameLibraryTab() {
         this.setText("Game Library");
@@ -37,7 +36,7 @@ public class GameLibraryTab extends Tab {
         PlatformTable platformTable = new PlatformTable();
 
         //connects gameTableView to a new TableView
-        TableView gameTableView = new TableView();
+        gameTableView = new TableView();
 
         //Creates the first column for the table for the name of the game
         TableColumn<Game, String> column1 = new TableColumn<>("Game Title");
@@ -88,6 +87,13 @@ public class GameLibraryTab extends Tab {
 
         //Added the gameTableView to the Screen
        this.setContent(gameTableView);
+    }
+
+    //The function to refresh the game list
+    public void refreshGameList(){
+        GameTable gameTable = new GameTable();
+        gameTableView.getItems().clear();
+        gameTableView.getItems().addAll(gameTable.getAllGames());
     }
 
 
