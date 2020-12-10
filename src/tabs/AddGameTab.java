@@ -249,6 +249,8 @@ public class AddGameTab extends Tab {
             try {
                 GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
                 gameLibraryTab.updateLibrary();
+                StatsTab.getInstance().generatePlatformChart();
+                StatsTab.getInstance().generateCategoryChart();
             } catch (IOException e) {
                 e.printStackTrace();
             }
