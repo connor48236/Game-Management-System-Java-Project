@@ -1,5 +1,10 @@
 package database;
 
+/**
+ * @author Chris Corbett
+ * holds all the constants to create the
+ * tables for the database.
+ */
 public class DBConst {
 
     // Game Table

@@ -3,6 +3,11 @@ package database;
 import java.io.IOException;
 import java.sql.*;
 
+/**
+ * @author Chris Corbett
+ * creates connection to the data base and creates tables
+ * if they don't exist.
+ */
 public class Database {
     // Instance variable for singleton
     private static Database instance = null;
@@ -12,29 +17,38 @@ public class Database {
     private Database() throws IOException {
 
         String[] loginInfo = GetLogin.getLoginInfo();
-        final String DB_NAME = loginInfo[0];
-        final String DB_USER = loginInfo[1];
-        final String DB_PASSWORD = loginInfo[2];
-        final String DB_LOCATION = loginInfo[3];
 
-        if (connection == null) {
-            try {
-                // Create connection to the server
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                connection = DriverManager.getConnection("jdbc:mysql://" + DB_LOCATION + "/" + DB_NAME + "?serverTimezone=UTC", DB_USER, DB_PASSWORD);
-                System.out.println("Created Connection");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        String DB_NAME = "";
+        String DB_USER = "";
+        String DB_PASSWORD = "";
+        String DB_LOCATION = "";
 
-            try {
-                // Create tables for the user to use.
-                createTable(DBConst.TABLE_DEV_INFO, DBConst.CREATE_TABLE_DEV_INFO, connection);
-                createTable(DBConst.TABLE_PLATFORM, DBConst.CREATE_TABLE_PLATFORM, connection);
-                createTable(DBConst.TABLE_CATEGORY, DBConst.CREATE_TABLE_CATEGORY, connection);
-                createTable(DBConst.TABLE_GAME, DBConst.CREATE_TABLE_GAME, connection);
-            } catch (Exception e) {
-                e.printStackTrace();
+        if (loginInfo != null) {
+            DB_NAME = loginInfo[0];
+            DB_USER = loginInfo[1];
+            DB_PASSWORD = loginInfo[2];
+            DB_LOCATION = loginInfo[3];
+
+
+            if (connection == null) {
+                try {
+                    // Create connection to the server
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    connection = DriverManager.getConnection("jdbc:mysql://" + DB_LOCATION + "/" + DB_NAME + "?serverTimezone=UTC", DB_USER, DB_PASSWORD);
+                    System.out.println("Created Connection");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    // Create tables for the user to use.
+                    createTable(DBConst.TABLE_DEV_INFO, DBConst.CREATE_TABLE_DEV_INFO, connection);
+                    createTable(DBConst.TABLE_PLATFORM, DBConst.CREATE_TABLE_PLATFORM, connection);
+                    createTable(DBConst.TABLE_CATEGORY, DBConst.CREATE_TABLE_CATEGORY, connection);
+                    createTable(DBConst.TABLE_GAME, DBConst.CREATE_TABLE_GAME, connection);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

@@ -4,6 +4,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * @author Chris Corbett
+ * gets the login info from the login.txt file
+ * so the database connection can be made.
+ */
 public class GetLogin {
 
     public static String[] getLoginInfo() throws IOException {

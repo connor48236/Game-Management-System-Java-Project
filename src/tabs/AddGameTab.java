@@ -30,7 +30,7 @@ import java.nio.file.*;
 
 /**
  * @author Chris Corbett
- *
+ * Tab to add games to the database.
  */
 public class AddGameTab extends Tab {
 
@@ -282,6 +282,12 @@ public class AddGameTab extends Tab {
         this.setContent(root);
     }
 
+    /**
+     * @author Chris Corbett
+     * @param file
+     * @return returns the string location of the file.
+     * @throws IOException
+     */
     private String getImage(File file) throws IOException {
         // Path for the image.
         if (file != null) {

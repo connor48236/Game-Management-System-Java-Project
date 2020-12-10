@@ -4,12 +4,9 @@ import daos.GameDao;
 import database.DBConst;
 import database.Database;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import pojo.DevInfo;
 import pojo.Game;
 import pojo.PrettyGame;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
