@@ -1,19 +1,24 @@
 package pojo;
 
-public class Game {
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.File;
+
+public class PrettyGame {
     private int id;
     private String name;
-    private String image;
+    private Image image;
     private int platform;
     private int category;
     private String releaseDate;
     private int devInfo;
 
     // Constructors
-    public Game() {
+    public PrettyGame() {
     }
 
-    public Game(String name, String image, int platform, int category, String releaseDate, int devInfo) {
+    public PrettyGame(String name, Image image, int platform, int category, String releaseDate, int devInfo) {
         this.name = name;
         this.image = image;
         this.platform = platform;
@@ -22,7 +27,7 @@ public class Game {
         this.devInfo = devInfo;
     }
 
-    public Game(int id, String name, String image, int platform, int category, String releaseDate, int devInfo) {
+    public PrettyGame(int id, String name, Image image, int platform, int category, String releaseDate, int devInfo) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -49,11 +54,11 @@ public class Game {
         this.name = name;
     }
 
-    public String getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 

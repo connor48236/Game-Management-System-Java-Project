@@ -5,6 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -24,10 +26,12 @@ import tables.PlatformTable;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 
+/**
+ * @author Chris Corbett
+ *
+ */
 public class AddGameTab extends Tab {
 
     // Create private instance variable.
@@ -40,7 +44,7 @@ public class AddGameTab extends Tab {
     public ComboBox<Category> categoryComboBox;
 
     // Private constructor so AddGameTab is a singleton.
-    private AddGameTab() {
+    private AddGameTab() throws IOException {
         this.setText("Add Game");
 
         //Adding the tables to the class to use them
@@ -68,11 +72,25 @@ public class AddGameTab extends Tab {
         Text gameImageText = new Text("Select Image");
         root.add(gameImageText, 0, 1);
         Button imageButton = new Button("Select Image");
+        ImageView gameImage = new ImageView();
+        root.add(gameImage, 2, 1);
 
         imageButton.setOnAction(e -> {
             File file = fileChooser.showOpenDialog(GameTracker.getStage());
             try {
+                // Move the image into the source directory
                 imagePath = getImage(file);
+
+                // Set the ImageView to the selected image.
+                File imageFile = new File(imagePath);
+                Image image = new Image(imageFile.toURI().toString());
+                gameImage.setImage(image);
+
+                // Resize image and keep aspect ratio.
+                double ratio = image.getHeight() / image.getWidth();
+                double newHeight = 200;
+                gameImage.setFitHeight(newHeight);
+                gameImage.setFitWidth(newHeight / ratio);
             } catch (IOException ioException) {
                 ioException.printStackTrace();
             }
@@ -128,6 +146,7 @@ public class AddGameTab extends Tab {
             addDevInfo.setOnAction(event -> {
                 DevInfo devInfo = new DevInfo(developerName.getText(), publisherName.getText());
                 devInfoTable.createDevInfo(devInfo);
+                devInfoCombo.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
                 newWindow.close();
                 //Refresh the dev info
                 devInfoCombo.getItems().clear();
@@ -173,6 +192,7 @@ public class AddGameTab extends Tab {
             addPlatform.setOnAction(event -> {
                 Platform platform = new Platform(platformName.getText());
                 platformTable.createPlatform(platform);
+                platformComboBox.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
                 newWindow.close();
                 //Refresh the platforms
                 platformComboBox.getItems().clear();
@@ -218,6 +238,7 @@ public class AddGameTab extends Tab {
             addCategory.setOnAction(event -> {
                 Category category = new Category(categoryName.getText());
                 categoryTable.createCategory(category);
+                categoryComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 newWindow.close();
                 //Refresh the category
                 categoryComboBox.getItems().clear();
@@ -240,9 +261,19 @@ public class AddGameTab extends Tab {
             System.out.println(platformComboBox.getSelectionModel().getSelectedItem().getId());
             gameTable.createGame(game);
             //refresh after entered
-            RemoveGameTab.getInstance().refreshGameBox();
-            GameLibraryTab.getInstance().refreshGameList();
+            try {
+                RemoveGameTab.getInstance().refreshGameBox();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+
+            try {
+                GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
+                gameLibraryTab.updateLibrary();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         });
         root.add(addGameButton, 0, 6);
 
@@ -262,7 +293,8 @@ public class AddGameTab extends Tab {
             }
 
             // Move the image to the images directory
-            Files.move(Paths.get(file.toURI()), Paths.get(newFile.toURI()));
+            //Files.move(Paths.get(file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.COPY_ATTRIBUTES);
+            Files.copy(Paths.get(file.toURI()), Paths.get(newFile.toURI()), StandardCopyOption.REPLACE_EXISTING);
 
             return newFile.getAbsolutePath();
         }
@@ -271,7 +303,7 @@ public class AddGameTab extends Tab {
 
 
     // Get instance method.
-    public static AddGameTab getInstance() {
+    public static AddGameTab getInstance() throws IOException {
         if (tab == null) {
             tab = new AddGameTab();
         }

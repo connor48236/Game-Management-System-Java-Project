@@ -10,6 +10,7 @@ import pojo.Game;
 import tables.GameTable;
 
 import javax.swing.border.Border;
+import java.io.IOException;
 
 public class RemoveGameTab extends Tab {
 
@@ -19,7 +20,7 @@ public class RemoveGameTab extends Tab {
     public ComboBox gameComboBox;
 
     // Private constructor so GameLibraryTab is a singleton.
-    private RemoveGameTab() {
+    private RemoveGameTab() throws IOException {
         this.setText("Remove Game");
 
         //add game table to class
@@ -42,7 +43,13 @@ public class RemoveGameTab extends Tab {
         deleteButton.setOnAction(e->{
             Game game = (Game) gameComboBox.getSelectionModel().getSelectedItem();
             gameTable.deleteGame(game.getId());
-            refreshGameBox();
+            gameComboBox.setItems(FXCollections.observableList(gameTable.getAllGames()));
+            try {
+                GameLibraryTab gameLibraryTab = GameLibraryTab.getInstance();
+                gameLibraryTab.updateLibrary();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
         //adding the button to root
@@ -50,7 +57,6 @@ public class RemoveGameTab extends Tab {
         this.setContent(root);
 
     }
-
     //The function to refresh the list of games
     public void refreshGameBox(){
         gameComboBox.getItems().clear();
@@ -58,7 +64,7 @@ public class RemoveGameTab extends Tab {
     }
 
     // Get instance method.
-    public static RemoveGameTab getInstance() {
+    public static RemoveGameTab getInstance() throws IOException {
         if (tab == null) {
             tab = new RemoveGameTab();
         }

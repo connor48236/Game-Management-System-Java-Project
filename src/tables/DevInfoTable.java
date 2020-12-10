@@ -6,6 +6,7 @@ import database.Database;
 import pojo.Category;
 import pojo.DevInfo;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,6 +17,9 @@ public class DevInfoTable implements DevInfoDao {
     Database database = Database.getInstance();
     //Creates a arrayList of devInfo
     ArrayList<DevInfo> devInfos;
+
+    public DevInfoTable() throws IOException {
+    }
 
     /**
      *This function will grab all DevInfo form the database

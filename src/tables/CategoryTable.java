@@ -5,6 +5,8 @@ import database.DBConst;
 import database.Database;
 import pojo.Category;
 
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -15,6 +17,9 @@ public class CategoryTable implements CategoryDao {
     Database database = Database.getInstance();
     //Creates a arrayList of categories
     ArrayList<Category> categories;
+
+    public CategoryTable() throws IOException {
+    }
 
     /**
      *This function will grab all Categories form the database
