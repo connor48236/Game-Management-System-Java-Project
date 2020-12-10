@@ -54,7 +54,8 @@ public class GameTable  implements GameDao {
     }
 
     /**
-     *
+     * @author Chris Corbett
+     * get the game image as an Image type instead of a String.
      * @return This will find all games in the database and return them
      */
     public ArrayList<PrettyGame> getAllPrettyGames() {
@@ -145,6 +146,13 @@ public class GameTable  implements GameDao {
         }
     }
 
+    /**
+     * @author Chris Corbett
+     * gets the count for all the categories
+     * from the parameter.
+     * @param category
+     * @return
+     */
     public int getCategoryCount(int category) {
         int count = -1;
         try {
@@ -160,6 +168,13 @@ public class GameTable  implements GameDao {
         return count;
     }
 
+    /**
+     * @author Chris Corbett
+     * gets the count for all the platforms.
+     * from the parameter.
+     * @param platform
+     * @return
+     */
     public int getPlatformCount(int platform) {
         int count = -1;
         try {

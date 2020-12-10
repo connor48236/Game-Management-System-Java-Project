@@ -15,7 +15,6 @@ import java.io.IOException;
 /**
  * @author Connor Cozad
  */
-
 public class GameLibraryTab extends Tab {
 
     // Create private instance variable.

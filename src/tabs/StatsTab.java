@@ -14,6 +14,11 @@ import tables.PlatformTable;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * @author Chris Corbett
+ * stats tab to display the stats from in
+ * the database
+ */
 public class StatsTab extends Tab {
 
     private static StatsTab tab;
@@ -42,6 +47,12 @@ public class StatsTab extends Tab {
         this.setContent(pane);
     }
 
+    /**
+     * @author Chris Corbett
+     * generates the chart for all the
+     * platform info
+     * @throws IOException
+     */
     public void generatePlatformChart() throws IOException {
         GameTable gameTable = new GameTable();
         PlatformTable platformTable = new PlatformTable();
@@ -62,6 +73,12 @@ public class StatsTab extends Tab {
         platformChart.setData(chartData);
     }
 
+    /**
+     * @author Chris Corbett
+     * generates the chart for all the
+     * category info
+     * @throws IOException
+     */
     public void generateCategoryChart() throws IOException {
 
         GameTable gameTable = new GameTable();

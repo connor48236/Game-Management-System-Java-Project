@@ -5,6 +5,10 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 
+/**
+ * @author Chris Corbett
+ * game image as Image to be put in the table.
+ */
 public class PrettyGame {
     private int id;
     private String name;
