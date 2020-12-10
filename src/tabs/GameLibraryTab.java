@@ -12,6 +12,9 @@ import tables.DevInfoTable;
 import tables.GameTable;
 import tables.PlatformTable;
 import java.io.IOException;
+/**
+ * @author Connor Cozad
+ */
 
 public class GameLibraryTab extends Tab {
 

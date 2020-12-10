@@ -8,9 +8,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import pojo.Game;
 import tables.GameTable;
-
-import javax.swing.border.Border;
 import java.io.IOException;
+/**
+ * @author Connor Cozad
+ */
 
 public class RemoveGameTab extends Tab {
 

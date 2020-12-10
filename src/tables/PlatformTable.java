@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * @author Connor Cozad
+ */
+
 public class PlatformTable implements PlatformDao {
     //Connects to the database
     Database database = Database.getInstance();
