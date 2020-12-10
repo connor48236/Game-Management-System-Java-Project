@@ -1,5 +1,9 @@
 package pojo;
 
+/**
+ * @author Connor Cozad
+ */
+
 public class DevInfo {
     private int id;
     private String developerName;

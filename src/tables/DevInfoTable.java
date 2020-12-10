@@ -12,6 +12,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * @author Connor Cozad
+ */
+
 public class DevInfoTable implements DevInfoDao {
     //Connects to the data base
     Database database = Database.getInstance();

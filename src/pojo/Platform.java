@@ -1,5 +1,9 @@
 package pojo;
 
+/**
+ * @author Connor Cozad
+ */
+
 public class Platform {
     private int id;
     private String name;

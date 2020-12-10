@@ -15,6 +15,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+/**
+ * @author Connor Cozad
+ */
+
 public class GameTable  implements GameDao {
     //Connects to the dataBase
     Database database = Database.getInstance();

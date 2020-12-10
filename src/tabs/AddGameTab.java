@@ -148,9 +148,15 @@ public class AddGameTab extends Tab {
                 devInfoTable.createDevInfo(devInfo);
                 devInfoCombo.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
                 newWindow.close();
+                /**
+                 * @author Connor Cozad
+                 */
                 //Refresh the dev info
                 devInfoCombo.getItems().clear();
                 devInfoCombo.setItems(FXCollections.observableArrayList(devInfoTable.getAllDevInfo()));
+                /**
+                 *
+                 */
             });
         });
         root.add(createDevInfo, 2, 3);
@@ -194,9 +200,15 @@ public class AddGameTab extends Tab {
                 platformTable.createPlatform(platform);
                 platformComboBox.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
                 newWindow.close();
+                /**
+                 * @author Connor Cozad
+                 */
                 //Refresh the platforms
                 platformComboBox.getItems().clear();
                 platformComboBox.setItems(FXCollections.observableArrayList(platformTable.getAllPlatforms()));
+                /**
+                 *
+                 */
             });
         });
         root.add(createPlatform, 2, 4);
@@ -240,9 +252,15 @@ public class AddGameTab extends Tab {
                 categoryTable.createCategory(category);
                 categoryComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
                 newWindow.close();
+                /**
+                 * @author Connor Cozad
+                 */
                 //Refresh the category
                 categoryComboBox.getItems().clear();
                 categoryComboBox.setItems(FXCollections.observableArrayList(categoryTable.getAllCategories()));
+                /**
+                 *
+                 */
 
             });
         });
