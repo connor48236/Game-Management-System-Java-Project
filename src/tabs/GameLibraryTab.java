@@ -56,14 +56,14 @@ public class GameLibraryTab extends Tab {
         //Creates the column of the table for the platform
         TableColumn<Game, String> column3 = new TableColumn<>("Game Platform");
         //Adds the game platform to the column
-        column3.setCellValueFactory(e -> new SimpleStringProperty(platformTable.getPlatform(e.getValue().getId()).getName()));
+        column3.setCellValueFactory(e -> new SimpleStringProperty(platformTable.getPlatform(e.getValue().getPlatform()).getName()));
         //Adds the column to the table
         gameTableView.getColumns().add(column3);
 
         //Creates the column of the table for the Category
         TableColumn<Game, String> column4 = new TableColumn<>("Game Category");
         //Adds the game category to the column
-        column4.setCellValueFactory(e -> new SimpleStringProperty(categoryTable.getCategory(e.getValue().getId()).getName()));
+        column4.setCellValueFactory(e -> new SimpleStringProperty(categoryTable.getCategory(e.getValue().getCategory()).getName()));
         //Adds the column to the table
        gameTableView.getColumns().add(column4);
 
@@ -77,8 +77,8 @@ public class GameLibraryTab extends Tab {
         //Creates the column of the table for the DevInfo
       TableColumn<Game, String> column6 = new TableColumn<>("Game Developer Info");
         //Adds the game dev info to the column
-       column6.setCellValueFactory(e -> new SimpleStringProperty("Developer " + devInfoTable.getDevInfo(e.getValue().getId()).getDeveloperName() + " , " +
-               "Publisher " + devInfoTable.getDevInfo(e.getValue().getId()).getPublisherName()));
+       column6.setCellValueFactory(e -> new SimpleStringProperty("Developer " + devInfoTable.getDevInfo(e.getValue().getDevInfo()).getDeveloperName() + " , " +
+               "Publisher " + devInfoTable.getDevInfo(e.getValue().getDevInfo()).getPublisherName()));
         //Adds the column to the table
        gameTableView.getColumns().add(column6);
 
